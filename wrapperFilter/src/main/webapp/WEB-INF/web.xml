@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
+	<display-name>wrapperFilter</display-name>
+
+
+
+	<filter>
+		<display-name>wrapperFilter</display-name>
+		<filter-name>wrapperFilter</filter-name>
+		<filter-class>es.pruebas.jee6.filter.wrapper.WrapperFilter</filter-class>
+		<init-param>
+			<param-name>wrapper.param.filterClass</param-name>
+			<param-value>es.pruebas.jee6.filter.SayHelloFilter</param-value>
+		</init-param>
+		
+		<init-param>
+			<param-name>wrapper.param.wrapperConditionClass</param-name>
+			<param-value>es.pruebas.jee6.filter.wrapper.ExclusionFilterWrapperCondition</param-value>
+		</init-param>
+		<init-param>
+			<param-name>wrapper.exclusionFilterWrapperCondition.param</param-name>
+			<param-value>
+				/dontCallFilter/,
+				/neitherInThisURL/ 
+			</param-value>
+		</init-param>
+		
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>wrapperFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+
+	
+	<filter>
+		<display-name>SayWorldFilter</display-name>
+		<filter-name>SayWorldFilter</filter-name>
+		<filter-class>es.pruebas.jee6.filter.SayWorldFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>SayWorldFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+</web-app>
