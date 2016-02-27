@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>Spring Security Example </title>              
+    </head>
+    <body>
+     	<script type="text/javascript">	        
+	        var copyFields = function() {
+	        	document.getElementById('username').value = document.getElementById('usernameFake').value;
+	        	document.getElementById('password').value = document.getElementById('passwordFake').value;	
+	        }
+	        
+	        var submitRealForm = function() {
+	        	copyFields();
+	        	document.getElementById('realLoginForm').submit();
+	        	return false;
+	        }
+	        
+	        var submitFormOnEnter = function(event) {
+	        	if (event.keyCode == 13) {
+	        		submitRealForm();
+	        	}
+	        }
+        </script>
+        
+        <div th:if="${param.error}">
+            Invalid username and password.
+        </div>
+        
+        <div th:if="${param.logout}">
+            You have been logged out.
+        </div>
+        
+         
+        <form id="realLoginForm" th:action="@{/login}" method="post" autocomplete="off" style="display:none">
+            <input id="username" type="hidden" name="username"  readonly="readonly"/>
+            <input id="password" type="hidden" name="password" readonly="readonly"/>       
+        </form>
+      
+        
+        <div class="simulateForm">
+            <div><label> User Name : <input id="usernameFake" type="text" onkeydown="submitFormOnEnter(event)"/> </label></div>
+            <div><label> Password: <input id="passwordFake" type="password" onkeydown="submitFormOnEnter(event)"/> </label></div>
+            <div> <button type="button" onclick="submitRealForm()">Login user/pass</button></div>
+            <div> <a th:href="@{/logincert}">Login certificate</a></div>
+        </div>
+    </body>    
+</html>
