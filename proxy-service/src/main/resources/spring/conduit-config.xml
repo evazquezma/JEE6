@@ -1,0 +1,26 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:cxf="http://camel.apache.org/schema/cxf"
+	xmlns:sec="http://cxf.apache.org/configuration/security" 
+	xmlns:http="http://cxf.apache.org/transports/http/configuration"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+			  http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+			  http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+              http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd
+              http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+              http://cxf.apache.org/configuration/security http://cxf.apache.org/schemas/configuration/security.xsd
+              http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd">
+
+	
+	<http:conduit name="{http://ws.javacodegeeks.com/product-service}ProductPort.http-conduit">
+	    <http:client Accept="text/xml" AcceptEncoding="gzip,deflate,sdch"  AllowChunking="true" AutoRedirect="true" CacheControl="No-Cache" ContentType="text/xml"/>
+	    
+		<http:tlsClientParameters disableCNCheck="true">
+			<sec:trustManagers>
+				<sec:keyStore file="${service.client.truststore.path}" type="jks" password="${service.client.truststore.pass}" />
+			</sec:trustManagers>
+		</http:tlsClientParameters>
+	</http:conduit>
+		
+</beans>
