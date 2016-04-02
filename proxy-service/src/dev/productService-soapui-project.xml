@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="80defa2d-9c76-41dc-9524-cb860401621a" activeEnvironment="Default" name="productService" resourceRoot="" soapui-version="5.2.1" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="d369762b-d647-4fe7-8eb0-4f501afcb4e6" wsaVersion="NONE" name="ProductSOAPBinding" type="wsdl" bindingName="{http://ws.javacodegeeks.com/product-service}ProductSOAPBinding" soapVersion="1_1" anonymous="optional" definition="file:/D:/workspaces/github/proxy-service/src/main/resources/wsdl/product/productService.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:\D:\workspaces\github\proxy-service\src\main\resources\wsdl\product\productService.wsdl"><con:part><con:url>file:\D:\workspaces\github\proxy-service\src\main\resources\wsdl\product\productService.wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="wsdl-first" targetNamespace="http://ws.javacodegeeks.com/product-service" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://ws.javacodegeeks.com/product-service" xmlns:typens="http://ws.javacodegeeks.com/product-service/types">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://ws.javacodegeeks.com/product-service/types" elementFormDeerror="qualified">
+      <xsd:element name="productRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="id" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="productResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="id" type="xsd:string"/>
+            <xsd:element name="description" type="xsd:string"/>
+            <xsd:element name="price" type="xsd:int"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="error">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="0" name="reason" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ProductRequest">
+    <wsdl:part name="request" element="typens:productRequest"/>
+  </wsdl:message>
+  <wsdl:message name="ProductResponse">
+    <wsdl:part name="response" element="typens:productResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ErrorMessage">
+    <wsdl:part name="error" element="typens:error"/>
+  </wsdl:message>
+  <wsdl:portType name="Product">
+    <wsdl:operation name="getProductDetails">
+      <wsdl:input message="tns:ProductRequest"/>
+      <wsdl:output message="tns:ProductResponse"/>
+      <wsdl:fault name="error" message="tns:ErrorMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ProductSOAPBinding" type="tns:Product">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getProductDetails">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="error">
+        <soap:fault name="error" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ProductService">
+    <wsdl:port binding="tns:ProductSOAPBinding" name="ProductPort">
+      <soap:address location="http://localhost:8080/productService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/productService</con:endpoint><con:endpoint>https://EMILIO-PC:8088/mockProductSOAPBinding</con:endpoint></con:endpoints><con:operation id="12661c44-0660-49d8-8508-08b3a1d33e0c" isOneWay="false" action="" name="getProductDetails" bindingOperationName="getProductDetails" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="864f89c3-0bb8-4d1e-9ebd-9366d32a5a1e" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/productService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:typ="http://ws.javacodegeeks.com/product-service/types">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <typ:productRequest>\r
+         <id>5</id>\r
+      </typ:productRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://ws.javacodegeeks.com/product-service/Product/getProductDetailsRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:mockService id="492d8fad-9ca9-4f98-9865-06dfeacc9bc7" port="8088" path="/mockProductSOAPBinding" host="EMILIO-PC" name="ProductSOAPBinding MockService"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:properties/><con:mockOperation name="getProductDetails" id="98910088-696c-4e59-9e13-335d52a12f36" interface="ProductSOAPBinding" operation="getProductDetails"><con:settings/><con:defaultResponse>Response 1</con:defaultResponse><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:response name="Response 1" id="71e6db47-392d-4167-8d9a-ecd0e77c0d21" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:typ="http://ws.javacodegeeks.com/product-service/types">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <typ:productResponse>
+         <id>1</id>
+         <description>xxxx</description>
+         <price>6</price>
+      </typ:productResponse>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://ws.javacodegeeks.com/product-service/Product/getProductDetailsResponse"/></con:response><con:dispatchConfig/></con:mockOperation></con:mockService><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/></con:soapui-project>
