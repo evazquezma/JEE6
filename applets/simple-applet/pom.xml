@@ -1,0 +1,70 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>es.sisifo.pruebas</groupId>
+	<artifactId>simple-applet</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<properties>
+		<java-version>1.7</java-version>
+	</properties>
+
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+					<source>${java-version}</source>
+					<target>${java-version}</target>
+				</configuration>
+			</plugin>
+
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.0.2</version>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<Application-Name>My simple applet</Application-Name>
+							<Permissions>all-permissions</Permissions>
+							<Codebase>*</Codebase>
+							<Application-Library-Allowable-Codebase>http://localhost</Application-Library-Allowable-Codebase>
+							<Entry-Point>es.pruebas.sisifo.applet.main.TestApplet</Entry-Point>
+							<Trusted-Only>true</Trusted-Only>
+						</manifestEntries>
+					</archive>
+				</configuration>				
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jarsigner-plugin</artifactId>
+				<version>1.4</version>
+				<executions>
+					<execution>
+						<id>sign</id>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<keystore>${basedir}/src/dev/sign/applet_signer.p12</keystore>
+					<storepass>1234</storepass>
+					<storetype>PKCS12</storetype>
+
+					<alias>applet_signer</alias>
+					<keypass>1234</keypass>
+					
+					<verbose>true</verbose>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

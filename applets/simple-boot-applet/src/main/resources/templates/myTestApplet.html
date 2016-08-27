@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Applets suck</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="applet/prueba.js"></script>
+</head>
+<body>
+    <p>This is one applet</p>
+    
+    
+    <embed type="application/x-java-applet" id="myApplet" 
+    	height="200" width="300"  
+    	name="A simple applet"  
+    	th:archive="@{/applet/simple-applet-0.0.1-SNAPSHOT.jar}" 
+    	code="es.pruebas.sisifo.applet.main.TestApplet" 
+    	java_arguments="-Xms512M -Xmx512M" 
+    	custom_java_arguments="null" 
+    	codebase_lookup="false" 
+    	separate_jvm="true" 
+    	locale="null">
+    </embed>
+           
+</body>
+</html>
