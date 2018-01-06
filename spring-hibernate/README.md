@@ -1,0 +1,3 @@
+# SPRING-HIBERANTE #
+Simple example for handle large files in database with Hibernate and Spring
+This example uses a local database, so it will only work in my environment...
