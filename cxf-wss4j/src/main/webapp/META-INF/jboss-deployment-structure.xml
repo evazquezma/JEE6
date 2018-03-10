@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-deployment-structure>
+	<deployment>
+
+		<exclude-subsystems>
+			<subsystem name="logging" />
+			<subsystem name="webservices" />  
+		</exclude-subsystems>
+
+		<exclusions>
+			<module name="asm.asm" />
+			<module name="org.apache.log4j" />
+			<module name="org.slf4j" />
+			<module name="org.log4j" />
+			<module name="org.jboss.logging" />
+		</exclusions>
+	</deployment>
+</jboss-deployment-structure> 

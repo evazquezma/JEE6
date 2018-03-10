@@ -1,0 +1,115 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util" 
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="
+                http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd    
+                http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+                http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+	<!-- ********************************************************** -->
+	<!-- Al mensaje de entrada se le valida la firma y el timestamp -->
+	<!-- ********************************************************** -->
+	<bean id="wsss4JInInterceptorPublisher" class="org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor">
+		<constructor-arg>
+			<map>
+				<entry key="action" value="Signature Timestamp" />
+				<entry key="signaturePropRefId" value="signatureVerificationPropertiesBean" />
+				<entry key="signatureVerificationPropertiesBean" value-ref="publisherSignatureVerificationProperties" />
+						
+				<entry key="signatureKeyIdentifier" value="DirectReference" />	
+				<entry key="signatureAlgorithm" value="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
+				<entry key="signatureC14nAlgorithm" value="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+				<entry key="signatureDigestAlgorithm" value="http://www.w3.org/2000/09/xmldsig#sha1"/>				
+				<entry key="signatureKeyIdentifier" value="DirectReference" />
+				<entry key="signatureParts"	value="
+					{Content}{http://schemas.xmlsoap.org/soap/envelope/}Body;
+					{Content}{http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd}Timestamp;
+					{Content}{http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd}BinarySecurityToken" />								
+			</map>
+		</constructor-arg>
+	</bean>
+	
+	<util:properties id="publisherSignatureVerificationProperties">
+		<prop key="org.apache.ws.security.crypto.provider">${publisher.signatureVerification.org.apache.ws.security.crypto.provider}</prop>
+		<prop key="org.apache.ws.security.crypto.merlin.keystore.file">${publisher.signatureVerification.org.apache.ws.security.crypto.merlin.keystore.file}</prop>
+		<prop key="org.apache.ws.security.crypto.merlin.keystore.type">${publisher.signatureVerification.org.apache.ws.security.crypto.merlin.keystore.type}</prop>
+		<prop key="org.apache.ws.security.crypto.merlin.keystore.provider">${publisher.signatureVerification.org.apache.ws.security.crypto.merlin.keystore.provider}</prop>
+		<prop key="org.apache.ws.security.crypto.merlin.keystore.password">${publisher.signatureVerification.org.apache.ws.security.crypto.merlin.keystore.password}</prop>
+	</util:properties> 
+	
+	
+	
+	<!-- ********************************************************** -->
+	<!-- En el mensaje de respuesta se firma y se aplica timestamp  -->
+	<!-- ********************************************************** -->
+	<bean id="publisherCallback" class="es.sisifo.cxf.wss4j.handler.WSS4JCallbackHandler">
+		<property name="passwordsIdentifiers">
+			<map>
+				<entry key="${publisher.signature.certificate.alias}" value="${publisher.signature.certificate.password}" />
+			</map>
+		</property>
+	</bean>
+	
+	
+	<bean id="wsss4JOutInterceptorPublisher" class="org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor">
+		<constructor-arg>
+			<map>
+				<entry key="action" value="Signature Timestamp" />
+				<entry key="signaturePropRefId" value="signaturePropertiesBean" />
+				<entry key="signaturePropertiesBean" value-ref="PublisherSignatureProperties" />
+				
+				<entry key="signatureUser" value="${publisher.signature.certificate.alias}" />
+				<entry key="passwordCallbackRef" value-ref="publisherCallback" />
+								
+				<entry key="signatureKeyIdentifier" value="DirectReference" />	
+				<entry key="signatureAlgorithm" value="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
+				<entry key="signatureC14nAlgorithm" value="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+				<entry key="signatureDigestAlgorithm" value="http://www.w3.org/2000/09/xmldsig#sha1"/>				
+				<entry key="signatureKeyIdentifier" value="DirectReference" />
+				<entry key="signatureParts"	value="
+					{Content}{http://schemas.xmlsoap.org/soap/envelope/}Body;
+					{Content}{http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd}Timestamp;
+					{Content}{http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd}BinarySecurityToken" />
+					
+				<entry key="addInclusivePrefixes" value="false" />
+				<entry key="includeSignatureToken" value="true" />
+				<entry key="mustUnderstand" value="false" />			
+			</map>
+		</constructor-arg>
+	</bean>
+
+	<util:properties id="PublisherSignatureProperties">
+		<prop key="org.apache.ws.security.crypto.provider">${publisher.signature.org.apache.ws.security.crypto.provider}</prop>
+		<prop key="org.apache.ws.security.crypto.merlin.keystore.file">${publisher.signature.org.apache.ws.security.crypto.merlin.keystore.file}</prop>
+		<prop key="org.apache.ws.security.crypto.merlin.keystore.type">${publisher.signature.org.apache.ws.security.crypto.merlin.keystore.type}</prop>
+		<prop key="org.apache.ws.security.crypto.merlin.keystore.provider">${publisher.signature.org.apache.ws.security.crypto.merlin.keystore.provider}</prop>
+		<prop key="org.apache.ws.security.crypto.merlin.keystore.password">${publisher.signature.org.apache.ws.security.crypto.merlin.keystore.password}</prop>
+		<prop key="org.apache.ws.security.crypto.merlin.load.cacerts">${publisher.signature.org.apache.ws.security.crypto.merlin.load.cacerts}</prop>
+	</util:properties>
+	
+		
+	
+	<!-- ********************************************************** -->
+	<!-- ********************************************************** -->
+	<!-- ********************************************************** -->
+	
+	<bean id="publisherLoggingInInterceptor"  class="org.apache.cxf.interceptor.LoggingInInterceptor" />
+	<bean id="publisherLoggingOutInterceptor" class="org.apache.cxf.interceptor.LoggingOutInterceptor" />
+
+
+	<jaxws:endpoint id="helloWs" implementor="#helloWebService"	address="/hello">
+		<jaxws:inInterceptors>
+			<ref bean="publisherLoggingInInterceptor" />
+			<ref bean="wsss4JInInterceptorPublisher"/>
+		</jaxws:inInterceptors>
+
+		<jaxws:outInterceptors>
+			<ref bean="wsss4JOutInterceptorPublisher"/>
+			<ref bean="publisherLoggingOutInterceptor" />
+		</jaxws:outInterceptors>
+	</jaxws:endpoint>
+
+
+</beans>
