@@ -67,16 +67,7 @@
 			<map>
 				<entry key="action" value="Signature Timestamp" />
 				<entry key="signaturePropRefId" value="signatureVerificationPropertiesBean" />
-				<entry key="signatureVerificationPropertiesBean" value-ref="consumerSignatureVerificationProperties" />
-				
-				<entry key="signatureAlgorithm" value="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
-				<entry key="signatureC14nAlgorithm" value="http://www.w3.org/2001/10/xml-exc-c14n#"/>
-				<entry key="signatureDigestAlgorithm" value="http://www.w3.org/2000/09/xmldsig#sha1"/>				
-				<entry key="signatureKeyIdentifier" value="DirectReference" />
-				<entry key="signatureParts"	value="
-					{Content}{http://schemas.xmlsoap.org/soap/envelope/}Body;
-					{Content}{http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd}Timestamp;
-					{Content}{http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd}BinarySecurityToken" />							
+				<entry key="signatureVerificationPropertiesBean" value-ref="consumerSignatureVerificationProperties" />									
 			</map>
 		</constructor-arg>
 	</bean>
@@ -109,6 +100,7 @@
 
 		<jaxws:inInterceptors>
 			<ref bean="consumerLoggingInInterceptor" />
+			<ref bean="signatureCoverageChecker"/>
 			<ref bean="wsss4JInInterceptorConsumer"/>
 		</jaxws:inInterceptors>
 

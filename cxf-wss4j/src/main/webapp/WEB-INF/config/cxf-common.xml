@@ -1,0 +1,43 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util" 	
+	xsi:schemaLocation="
+                http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd    
+                http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+	<!-- Comprobar que el mensaje contenga cuerpo y timestamp firmado -->
+	<util:constant id="typeSigned" static-field="org.apache.cxf.ws.security.wss4j.CryptoCoverageUtil.CoverageType.SIGNED"/>
+	<util:constant id="scoopeElement" static-field="org.apache.cxf.ws.security.wss4j.CryptoCoverageUtil.CoverageScope.ELEMENT"/>
+
+
+	<bean id="bodyVerifier"	class="org.apache.cxf.ws.security.wss4j.CryptoCoverageChecker.XPathExpression">
+		<constructor-arg name="xPath" value="/soap:Envelope/soap:Body" />
+		<constructor-arg name="type" ref="typeSigned" />
+		<constructor-arg name="scope" ref="scoopeElement" />
+	</bean>
+	
+	<bean id="timestampVerifier"	class="org.apache.cxf.ws.security.wss4j.CryptoCoverageChecker.XPathExpression">
+		<constructor-arg name="xPath"
+			value="/soap:Envelope/soap:Header/wsse:Security/wsu:Timestamp" />
+		<constructor-arg name="type" ref="typeSigned" />
+		<constructor-arg name="scope" ref="scoopeElement" />
+	</bean>
+	
+	<bean id="signatureCoverageChecker" class="org.apache.cxf.ws.security.wss4j.CryptoCoverageChecker">
+		<constructor-arg name="prefixes">
+			<util:map id="prfx">
+				<entry key="soap" value="http://schemas.xmlsoap.org/soap/envelope/" />
+				<entry key="wsse" value="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" />
+				<entry key="wsu"  value="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" />
+			</util:map>
+		</constructor-arg>
+		<constructor-arg name="xPaths">
+			<list>
+				<ref bean="bodyVerifier" />
+				<ref bean="timestampVerifier" />
+			</list>
+		</constructor-arg>
+	</bean>
+
+</beans>

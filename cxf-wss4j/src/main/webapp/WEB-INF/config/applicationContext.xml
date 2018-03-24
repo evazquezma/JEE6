@@ -31,7 +31,8 @@
 	</bean>
 
 
-	<!-- Resto de recursos de configuración --> 	
+	<!-- Resto de recursos de configuración -->
+	<import resource="cxf-common.xml" /> 	
 	<import resource="cxf-consumer.xml" />
 	<import resource="cxf-publisher.xml" />
 
