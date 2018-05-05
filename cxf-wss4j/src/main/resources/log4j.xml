@@ -33,7 +33,7 @@
 	</logger>
 
 	<logger name="org.apache.cxf">
-		<level value="INFO" />
+		<level value="INFO"/>
 	</logger>
 
 

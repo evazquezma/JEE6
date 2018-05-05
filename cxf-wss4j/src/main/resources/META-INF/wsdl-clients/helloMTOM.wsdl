@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://provider.mtom.cxf.sisifo.es/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="helloMTOMWebService" targetNamespace="http://provider.mtom.cxf.sisifo.es/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://provider.mtom.cxf.sisifo.es/" elementFormDefault="unqualified" targetNamespace="http://provider.mtom.cxf.sisifo.es/" version="1.0">
+
+  <xs:element name="helloMTOMData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="name" type="xs:string"/>
+        <xs:element xmlns:ns1="http://www.w3.org/2005/05/xmlmime" name="fileData" ns1:expectedContentTypes="application/octet-stream" type="xs:base64Binary"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="sendData" type="tns:sendData"/>
+
+  <xs:element name="sendDataResponse" type="tns:sendDataResponse"/>
+
+  <xs:complexType name="sendData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="data">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element xmlns:ns2="http://www.w3.org/2005/05/xmlmime" name="fileData" ns2:expectedContentTypes="application/octet-stream" type="xs:base64Binary"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="sendDataResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="sendDataResponse">
+    <wsdl:part element="tns:sendDataResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="sendData">
+    <wsdl:part element="tns:sendData" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="HelloMTOMWebService">
+    <wsdl:operation name="sendData">
+      <wsdl:input message="tns:sendData" name="sendData">
+    </wsdl:input>
+      <wsdl:output message="tns:sendDataResponse" name="sendDataResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="helloMTOMWebServiceSoapBinding" type="tns:HelloMTOMWebService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="sendData">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="sendData">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="sendDataResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="helloMTOMWebService">
+    <wsdl:port binding="tns:helloMTOMWebServiceSoapBinding" name="HelloMTOMWebServiceImplPort">
+      <soap:address location="http://localhost:8080/cxf-wss4j/servizos/helloMTOM"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

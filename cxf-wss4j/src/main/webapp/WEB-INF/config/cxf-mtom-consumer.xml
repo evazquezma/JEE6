@@ -1,0 +1,46 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:sec="http://cxf.apache.org/configuration/security"
+	xmlns:http="http://cxf.apache.org/transports/http/configuration"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+		http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd
+		http://cxf.apache.org/configuration/security http://cxf.apache.org/schemas/configuration/security.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<!-- ********************************************************** -->
+	<!-- ********************************************************** -->
+	<!-- ********************************************************** -->
+
+	<bean id="mtomConsumerLoggingOutInterceptor" class="org.apache.cxf.interceptor.LoggingOutInterceptor" />
+	<bean id="mtomConsumerLoggingInInterceptor" class="org.apache.cxf.interceptor.LoggingInInterceptor" />
+
+
+	<jaxws:client id="helloMTOMWebServiceClient"
+		serviceClass="es.sisifo.cxf.wss4j.consumer.mtom.HelloMTOMWebService"
+		wsdlLocation="/META-INF/wsdl-clients/helloMTOM.wsdl" 
+		address="http://localhost:8080/cxf-wss4j/servizos/helloMTOM">
+		
+		<jaxws:properties>
+			<entry key="mtom-enabled" value="true" />
+		</jaxws:properties>
+		
+		<jaxws:outInterceptors>
+			<ref bean="mtomConsumerLoggingOutInterceptor" />
+		</jaxws:outInterceptors>
+
+		<jaxws:inInterceptors>
+			<ref bean="mtomConsumerLoggingInInterceptor" />
+		</jaxws:inInterceptors>
+
+	</jaxws:client>
+	
+	
+	<http:conduit name="{http://provider.mtom.cxf.sisifo.es/}HelloMTOMWebServicePort.http-conduit">
+		<http:client AllowChunking="true" ChunkingThreshold="4096" ChunkLength="-1"/>
+<!-- 			<http:client AllowChunking="false"/> -->
+	</http:conduit>
+	
+
+</beans>

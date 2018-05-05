@@ -41,6 +41,14 @@
 										<extraarg>es.sisifo.cxf.wss4j.consumer</extraarg>
 									</extraargs>
 								</wsdlOption>
+								
+								<wsdlOption>
+									<wsdl>${basedir}/src/main/resources/META-INF/wsdl-clients/helloMTOM.wsdl</wsdl>
+									<extraargs>
+										<extraarg>-p</extraarg>
+										<extraarg>es.sisifo.cxf.wss4j.consumer.mtom</extraarg>
+									</extraargs>
+								</wsdlOption>
 							</wsdlOptions>
 						</configuration>
 						<goals>

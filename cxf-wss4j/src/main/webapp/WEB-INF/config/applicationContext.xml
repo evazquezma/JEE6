@@ -35,5 +35,8 @@
 	<import resource="cxf-common.xml" /> 	
 	<import resource="cxf-consumer.xml" />
 	<import resource="cxf-publisher.xml" />
+	
+	<import resource="cxf-mtom-consumer.xml" />
+	<import resource="cxf-mtom-publisher.xml" />
 
 </beans>
