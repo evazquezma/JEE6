@@ -94,7 +94,7 @@
 		<!-- <version>${version.cxf}</version> -->
 		<!-- </dependency> -->
 
-		
+
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
@@ -115,5 +115,6 @@
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
+		
 	</dependencies>
 </project>
