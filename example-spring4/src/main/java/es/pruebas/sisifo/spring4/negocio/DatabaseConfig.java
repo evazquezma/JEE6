@@ -31,12 +31,10 @@ public class DatabaseConfig {
 		factoryBean.setDataSource(datasource);
 
 		final Properties props = new Properties();
-		props.put("hibernate.dialect", org.hibernate.dialect.HSQLDialect.class);
-
+		props.put("hibernate.dialect", org.hibernate.dialect.H2Dialect.class);
 		props.put("hibernate.show_sql", true);
 		props.put("hibernate.format_sql", true);
 		props.put("hibernate.hbm2ddl.auto", "create");
-
 		props.put("hibernate.transaction.coordinator_class", "jta");
 		props.put("hibernate.transaction.jta.platform", JBossAppServerJtaPlatform.class);
 
