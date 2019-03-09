@@ -1,0 +1,1 @@
+https://apereo.github.io/cas/5.1.x/protocol/CAS-Protocol-Specification.html
