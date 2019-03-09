@@ -43,11 +43,24 @@ public class LoginServlet extends HttpServlet {
 		LOGGER.info("Mock succesful login. username: {}", username);
 
 		final String ticket = buildTicket(username);
-		response.sendRedirect(service + "?" + ticket);
+		final String returnUrl = buildReturnUrl(service, ticket);
+
+		LOGGER.info("Redirect to service {}", returnUrl);
+		response.sendRedirect(returnUrl);
 	}
 
 
 	private String buildTicket(final String username) {
 		return "ticket-" + username;
+	}
+
+
+	private String buildReturnUrl(final String service, final String ticket) {
+		if (service.indexOf("?") > 0) {
+			return service + "&" + "ticket=" + ticket;
+		}
+		else {
+			return service + "?" + "ticket=" + ticket;
+		}
 	}
 }
